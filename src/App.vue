@@ -1,28 +1,36 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="view-wrapper">
+      <div class="view-container">
+        <CustomEditor />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import CustomEditor from './components/CustomEditor.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    CustomEditor,
+  },
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  height: 100%;
+}
+.view-wrapper {
+  background-color: #f5f6fb;
+  padding: 24px;
+  height: calc(100% - 48px);
+  .view-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    height: 100%;
+  }
 }
 </style>
