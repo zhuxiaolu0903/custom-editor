@@ -1,0 +1,23 @@
+.el-form {
+    .el-form-item--mini.el-form-item,
+    .el-form-item--small.el-form-item {
+        margin-bottom: 8px;
+    }
+}
+.el-button {
+    &.el-button--primary {
+        background-color: #0000ee;
+        border-color: #0000ee;
+    }
+    &.el-button--primary:focus,
+    &.el-button--primary:hover {
+        background-color: #5353e9;
+        border-color: #5353e9;
+    }
+    &.el-button.is-disabled,
+    .el-button.is-disabled:focus,
+    .el-button.is-disabled:hover {
+        background-color: #b5b5e3;
+        border-color: #b5b5e3;
+    }
+}

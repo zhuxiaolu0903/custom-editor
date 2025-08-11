@@ -1,24 +1,28 @@
 # custom-editor
+> 本项目是vue2+下，结合tiptap 实现的编辑器
 
-## Project setup
+特性：
++ 撤销/重做
++ 格式化
++ 文字加粗、斜体、下划线、删除线
+
+
+## 启动项目
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 本地环境构建和热启动
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### 生产环境构建和最小构建
 ```
 npm run build
 ```
 
-### Lints and fixes files
+### 代码检查和格式化
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
