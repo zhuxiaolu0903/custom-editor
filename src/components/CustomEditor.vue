@@ -1,7 +1,7 @@
 <template>
   <div class="custom-editor-wrapper">
     <div class="custom-editor-header">
-      <editor-toolbar v-if="editor" :editor="editor" :disabled="toolBarDisabled" />
+      <EditorToolbar v-if="editor" :editor="editor" :disabled="toolBarDisabled" />
     </div>
     <div class="custom-editor-container">
       <TitleInput
@@ -12,7 +12,8 @@
         @disableToolbar="handleDisableToolbar"
       />
       <div class="custom-editor-content">
-        <editor-content :editor="editor" />
+        <EditorBubbleMenu :editor="editor" v-if="editor" />
+        <EditorContent :editor="editor" />
       </div>
     </div>
   </div>
@@ -25,10 +26,12 @@ import StarterKit from '@tiptap/starter-kit'
 import { TextStyleKit } from '@tiptap/extension-text-style'
 import EditorToolbar from '@/components/Editor/EditorToolbar.vue'
 import TitleInput from '@/components/Editor/TitleInput.vue'
-import { ResetOnEnter, FormatBrush, FontFamily, FontSize } from '@/customExtensions'
+import { ResetOnEnter, FormatBrush, FontFamily, FontSize, ExtendLink } from '@/customExtensions'
+import EditorBubbleMenu from '@/components/Editor/EditorBubbleMenu'
 
 export default {
   components: {
+    EditorBubbleMenu,
     TitleInput,
     EditorToolbar,
     EditorContent,
@@ -58,7 +61,9 @@ export default {
     this.editor = new Editor({
       content: this.documentDetail.content,
       extensions: [
-        StarterKit,
+        StarterKit.configure({
+          link: false,
+        }),
         Placeholder.configure({
           placeholder: '输入 / 设置格式，输入空格使用 AI',
         }),
@@ -69,6 +74,7 @@ export default {
         TextStyleKit,
         FontFamily,
         FontSize,
+        ExtendLink,
       ],
       autofocus: this.type === 'add',
       onFocus: () => {

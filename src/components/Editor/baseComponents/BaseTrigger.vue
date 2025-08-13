@@ -1,17 +1,19 @@
 <template>
-  <div class="base-tooltip-wrapper" ref="triggerRef">
-    <slot name="default"></slot>
-    <div class="base-tooltip" ref="tooltipContentRef">
+  <div class="base-trigger-wrapper">
+    <div class="base-trigger__btn" ref="triggerRef">
+      <slot name="default"></slot>
+    </div>
+    <div class="base-trigger__content" ref="tooltipContentRef">
       <slot name="content"></slot>
     </div>
   </div>
 </template>
 
 <script>
-import { createTippy } from '@/components/Editor/common/createTippy'
+import { createTippy } from './createTippy'
 
 export default {
-  name: 'BaseTooltip',
+  name: 'BaseTrigger',
   props: {
     tippyOptions: {
       type: Object,
@@ -25,16 +27,14 @@ export default {
   mounted() {
     this.tippyInstance = createTippy(this.$refs.triggerRef, {
       content: this.$refs.tooltipContentRef,
-      allowHTML: false,
-      duration: 0,
-      getReferenceClientRect: null,
-      interactive: true,
-      trigger: 'mouseenter',
-      placement: 'top',
-      delay: [500, 250],
+      trigger: 'click',
       hideOnClick: true,
-      appendTo: () => document.body,
+      placement: 'bottom',
+      // appendTo: 'parent',
       ...this.tippyOptions,
+      onShow: (instance) => {
+        this.$emit('show', instance)
+      },
     })
   },
   methods: {
@@ -63,23 +63,13 @@ export default {
 </script>
 
 <style lang="scss">
-.base-tooltip {
-  width: auto;
-  height: auto;
-  padding: 3px;
-  border-radius: 0.35rem;
-  background-color: #030305;
-  color: #fdfdfd;
-  border: 1px solid #27272a;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  .base-tooltip-text {
-    height: 20px;
-    line-height: 20px;
-    font-size: 11px;
-    margin-left: 3px;
-  }
+.base-trigger__content {
+  background: #ffffff;
+  border: 1px solid #e9e9e9;
+  overflow: auto;
+  box-shadow: 0 2px 5px 2px #0000001a;
+  padding: 5px 0;
+  border-radius: 3px;
+  color: #333333;
 }
 </style>

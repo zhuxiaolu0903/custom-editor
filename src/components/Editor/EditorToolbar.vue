@@ -3,50 +3,50 @@
     <div class="editor-toolbar-container">
       <div class="editor-toolbar-item" v-for="(menu, index) in toolbarMenus" :key="index">
         <div v-if="menu.name === '|'">
-          <div class="editor-toolbar-divider"></div>
+          <Divider />
         </div>
         <div v-else class="editor-toolbar-item-content">
-          <base-tooltip :disabled="!menu.tips">
-            <div slot="content" class="tip-content">
-              <p class="base-tooltip-text" v-for="name in menu.tips" :key="name">{{ name }}</p>
-            </div>
-            <HeadingButton
-              v-if="menu.name === 'textFormat'"
-              :value="menu.getActive({ editor })"
-              :options="menu.options"
-              :is-disabled="disabled || menu.isDisabled({ editor })"
-              @selected="(level) => menu.onChange({ editor, level })"
-            />
-            <FontFamilyButton
-              v-else-if="menu.name === 'fontFamily'"
-              :value="menu.getActive({ editor })"
-              :options="menu.options"
-              :is-disabled="disabled || menu.isDisabled({ editor })"
-              @selected="(value) => menu.onChange({ editor, value })"
-            />
-            <FontSizeButton
-              v-else-if="menu.name === 'fontSize'"
-              :value="menu.getActive({ editor })"
-              :options="menu.options"
-              :is-disabled="disabled || menu.isDisabled({ editor })"
-              @selected="(value) => menu.onChange({ editor, value })"
-            />
-            <LinkButton
-              v-else-if="menu.name === 'link'"
-              :name="menu.name"
-              :is-active="menu.isActive({ editor })"
-              :is-disabled="disabled || menu.isDisabled({ editor })"
-              @click="menu.onClick({ editor })"
-            />
-            <IconButton
-              v-else
-              :name="menu.name"
-              @click="menu.onClick({ editor })"
-              @dblclick="menu.onDoubleClick({ editor })"
-              :is-active="menu.isActive({ editor })"
-              :is-disabled="disabled || menu.isDisabled({ editor })"
-            />
-          </base-tooltip>
+          <HeadingButton
+            v-if="menu.name === 'textFormat'"
+            :value="menu.getActive({ editor })"
+            :options="menu.options"
+            :is-disabled="disabled || menu.isDisabled({ editor })"
+            @selected="(level) => menu.onChange({ editor, level })"
+          />
+          <FontFamilyButton
+            v-else-if="menu.name === 'fontFamily'"
+            :value="menu.getActive({ editor })"
+            :options="menu.options"
+            :is-disabled="disabled || menu.isDisabled({ editor })"
+            @selected="(value) => menu.onChange({ editor, value })"
+          />
+          <FontSizeButton
+            v-else-if="menu.name === 'fontSize'"
+            :value="menu.getActive({ editor })"
+            :options="menu.options"
+            :is-disabled="disabled || menu.isDisabled({ editor })"
+            @selected="(value) => menu.onChange({ editor, value })"
+          />
+          <LinkButton
+            v-else-if="menu.name === 'link'"
+            :tips="menu.tips"
+            :editor="editor"
+            :is-active="menu.isActive({ editor })"
+            :is-disabled="disabled || menu.isDisabled({ editor })"
+            @click="(config) => menu.onClick({ editor, ...config })"
+          />
+          <IconButton
+            v-else
+            :tips="menu.tips"
+            @click="menu.onClick({ editor })"
+            @dblclick="menu.onDoubleClick({ editor })"
+            :is-active="menu.isActive({ editor })"
+            :is-disabled="disabled || menu.isDisabled({ editor })"
+          >
+            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+              <g fill="#39404D" fill-rule="evenodd" v-html="pathName(menu.name)"></g>
+            </svg>
+          </IconButton>
         </div>
       </div>
     </div>
@@ -54,8 +54,14 @@
 </template>
 
 <script>
-import { TOOLBAR_MENU_LIST } from '@/components/Editor/common'
-import { FontFamilyButton, HeadingButton, IconButton } from '@/components/Editor/components'
+import { TOOLBAR_MENU_LIST, toolbarPathNameMap } from '@/components/Editor/common'
+import {
+  FontFamilyButton,
+  HeadingButton,
+  IconButton,
+  FontSizeButton,
+  LinkButton,
+} from '@/components/Editor/components'
 import { boldConfig } from '@/components/Editor/extensionConfig/bold'
 import {
   blockquoteConfig,
@@ -79,15 +85,13 @@ import {
   underlineConfig,
   undoConfig,
 } from '@/components/Editor/extensionConfig'
-import FontSizeButton from '@/components/Editor/components/FontSizeButton.vue'
-import BaseTooltip from '@/components/Editor/common/BaseTooltip.vue'
-import LinkButton from '@/components/Editor/components/LinkButton.vue'
+import { Divider } from '@/components/Editor/baseComponents'
 
 export default {
   name: 'EditorToolbar',
   components: {
+    Divider,
     LinkButton,
-    BaseTooltip,
     FontSizeButton,
     FontFamilyButton,
     HeadingButton,
@@ -136,7 +140,6 @@ export default {
       },
     }
   },
-  methods: {},
   computed: {
     // 编辑器中内置扩展
     extensions() {
@@ -173,6 +176,11 @@ export default {
         .filter((menu) => menu !== null)
     },
   },
+  methods: {
+    pathName(name) {
+      return toolbarPathNameMap[name]
+    },
+  },
 }
 </script>
 
@@ -184,23 +192,9 @@ export default {
     flex-wrap: wrap;
     gap: 8px;
     height: 24px;
-    .editor-toolbar-divider {
-      background-color: #e8e9eb;
-      display: block;
-      height: 16px;
-      margin: 4px 8px;
-      width: 1px;
-    }
     .editor-toolbar-item-content {
       height: 24px;
     }
-  }
-}
-</style>
-<style lang="scss">
-.tip-content {
-  p {
-    margin: 0;
   }
 }
 </style>
