@@ -26,8 +26,16 @@ import StarterKit from '@tiptap/starter-kit'
 import { TextStyleKit } from '@tiptap/extension-text-style'
 import EditorToolbar from '@/components/Editor/EditorToolbar.vue'
 import TitleInput from '@/components/Editor/TitleInput.vue'
-import { ResetOnEnter, FormatBrush, FontFamily, FontSize } from '@/customExtensions'
+import {
+  ResetOnEnterExt,
+  FormatBrushExt,
+  FontFamilyExt,
+  FontSizeExt,
+  CodeBlockExt,
+} from '@/customExtensions'
 import EditorBubbleMenu from '@/components/Editor/EditorBubbleMenu'
+import { all, createLowlight } from 'lowlight'
+import { languages } from '@/customExtensions/CodeBlockExt'
 
 export default {
   components: {
@@ -65,13 +73,18 @@ export default {
         Placeholder.configure({
           placeholder: '输入 / 设置格式，输入空格使用 AI',
         }),
-        ResetOnEnter,
-        FormatBrush.configure({
+        ResetOnEnterExt,
+        FormatBrushExt.configure({
           editorContainerEle: document.querySelector('.custom-editor-content'),
         }),
         TextStyleKit,
-        FontFamily,
-        FontSize,
+        FontFamilyExt,
+        FontSizeExt,
+        CodeBlockExt.configure({
+          lowlight: createLowlight(all),
+          defaultLanguage: 'auto',
+          languages,
+        }),
       ],
       autofocus: this.type === 'add',
       onFocus: () => {

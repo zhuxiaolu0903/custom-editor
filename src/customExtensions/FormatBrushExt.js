@@ -7,7 +7,7 @@ const BrushMode = {
   ALWAYS: 'ALWAYS', // 持续进行
 }
 
-export const FormatBrush = Extension.create({
+export const FormatBrushExt = Extension.create({
   name: 'formatBrush',
   addOptions() {
     return {

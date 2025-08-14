@@ -1,6 +1,6 @@
 import { Extension } from '@tiptap/core'
 
-export const FontFamily = Extension.create({
+export const FontFamilyExt = Extension.create({
   name: 'fontFamily',
   addOptions() {
     return {

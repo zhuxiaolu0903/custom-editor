@@ -1,0 +1,65 @@
+@import '../../node_modules/highlight.js/styles/atom-one-light.css';
+.code-block-wrapper {
+  margin-top: 10px;
+  background: #f2f3f5;
+  word-wrap: normal;
+  white-space: normal;
+  border-radius: 5px;
+  pre {
+    margin: 0;
+    background-color: #f7f8fa;
+    border: none;
+  }
+  &:hover .code-block-tools {
+    display: flex;
+  }
+  .code-block-tools {
+    display: flex;
+    justify-content: flex-end;
+    height: 36px;
+    div {
+      color: #333333;
+      display: flex;
+      cursor: pointer;
+      align-items: center;
+      font-size: 14px;
+      margin: 0 3px;
+    }
+    &-lang {
+      svg {
+        fill: #333333;
+        margin: 2px;
+        height: 16px;
+        width: 16px;
+      }
+    }
+    &-autowrap {
+      margin: 0 10px;
+
+      svg {
+        fill: #333333;
+        margin: 2px;
+        height: 14px;
+        width: 14px;
+      }
+    }
+  }
+}
+.code-block-lang {
+  background: #ffffff;
+  width: 150px;
+  max-height: 300px;
+  overflow: auto;
+  border: solid 1px #e9e9e9;
+  color: #333333;
+  &-item {
+    padding: 5px;
+    font-size: 14px;
+    height: 20px;
+    line-height: 20px;
+    cursor: pointer;
+    &:hover {
+      background: #eeeeee;
+    }
+  }
+}

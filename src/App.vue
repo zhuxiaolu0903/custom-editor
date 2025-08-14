@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="view-wrapper">
+    <div class="view-wrapper theme-light">
       <div class="view-container">
         <CustomEditor />
       </div>

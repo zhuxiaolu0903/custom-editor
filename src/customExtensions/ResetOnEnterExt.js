@@ -4,7 +4,7 @@ import { Extension } from '@tiptap/vue-2'
  * 用于换行后，清除当前选区的所有标记
  * @type {Extension<any, any>}
  */
-export const ResetOnEnter = Extension.create({
+export const ResetOnEnterExt = Extension.create({
   addKeyboardShortcuts() {
     return {
       Enter: () => {

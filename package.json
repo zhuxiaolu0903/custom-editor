@@ -8,12 +8,14 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@tiptap/extension-code-block-lowlight": "^3.1.0",
     "@tiptap/extension-text-style": "^3.0.9",
     "@tiptap/pm": "^3.0.7",
     "@tiptap/starter-kit": "^3.0.7",
     "@tiptap/vue-2": "^3.0.7",
     "core-js": "^3.8.3",
     "element-ui": "^2.15.14",
+    "lowlight": "^3.3.0",
     "tippy.js": "^6.3.7",
     "vue": "^2.7.13"
   },
