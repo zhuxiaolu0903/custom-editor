@@ -1,4 +1,6 @@
 // 当前生效的工具栏
+import { getMarkRange } from '@tiptap/vue-2'
+
 export const TOOLBAR_MENU_LIST = [
   'undoRedo',
   'formatBrush',
@@ -67,4 +69,39 @@ export const toolbarPathNameMap = {
     '<path d="M6 6h14v1.5H6zM6 11h8v1.5H6zM6 16h14v1.5H6zM20.25 11.75l-3.5 2.5v-5z"></path>',
   hardBreak:
     '<svg t="1754025137706" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10790" width="24" height="24"><path d="M621.696 704h54.848a91.392 91.392 0 1 0 0-182.848H219.52a36.544 36.544 0 0 1 0-73.152h457.152a164.608 164.608 0 0 1 0 329.152h-54.912v36.544a18.304 18.304 0 0 1-29.248 14.656l-78.016-58.496a36.672 36.672 0 0 1 0-58.56l78.08-58.496a18.304 18.304 0 0 1 29.184 14.656V704zM219.52 192h585.152a36.544 36.544 0 0 1 0 73.152H219.392a36.544 36.544 0 1 1 0-73.152z m182.848 548.544a36.608 36.608 0 0 1-36.608 36.608H219.52a36.608 36.608 0 0 1 0-73.152h146.24a36.544 36.544 0 0 1 36.608 36.544z" p-id="10791"></path></svg>',
+}
+
+// 获取激活的链接文本或者选中的文本和激活的链接
+export const getLinkContent = (editor, isEdit = false) => {
+  let text = '',
+    href = ''
+  const { state } = editor.view
+  const { selection, doc } = state
+  const { empty } = selection
+  if (!empty) {
+    // 获取选区内的文本
+    text = doc.textBetween(selection.from, selection.to)
+  } else if (isEdit) {
+    // 从当前鼠标焦点处获取文本
+    const $pos = state.doc.resolve(selection.from) // 获取链接标记
+    const linkMark = state.schema.marks.link
+    // 使用 getMarkRange 获取链接的完整范围
+    const range = getMarkRange($pos, linkMark)
+    if (range) {
+      const { from: start, to: end } = range
+      // 获取链接文本内容
+      text = state.doc.textBetween(start, end)
+    }
+  }
+  if (isEdit) {
+    // 获取当前激活的链接
+    const linkData = editor.getAttributes('link')
+    if (linkData.href) {
+      href = linkData.href
+    }
+  }
+  return {
+    text,
+    href,
+  }
 }

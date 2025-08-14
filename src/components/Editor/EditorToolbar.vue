@@ -140,6 +140,11 @@ export default {
       },
     }
   },
+  methods: {
+    pathName(name) {
+      return toolbarPathNameMap[name]
+    },
+  },
   computed: {
     // 编辑器中内置扩展
     extensions() {
@@ -174,11 +179,6 @@ export default {
         })
         .flat()
         .filter((menu) => menu !== null)
-    },
-  },
-  methods: {
-    pathName(name) {
-      return toolbarPathNameMap[name]
     },
   },
 }

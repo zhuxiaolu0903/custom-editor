@@ -39,13 +39,13 @@
     </IconButton>
     <div class="link-button-content" slot="content">
       <el-form :model="params" label-width="40px" size="small">
-        <el-form-item label="文本" prop="text" v-if="mode === 'add'">
+        <el-form-item label="文本" prop="text">
           <el-input ref="textInputRef" v-model="params.text" placeholder="标题"></el-input>
         </el-form-item>
-        <el-form-item label="链接" prop="link">
+        <el-form-item label="链接" prop="href">
           <el-input
             ref="linkInputRef"
-            v-model="params.link"
+            v-model="params.href"
             placeholder="输入或粘贴链接"
             @keydown.enter.native="onSubmit"
           ></el-input>
@@ -63,6 +63,7 @@
 <script>
 import { IconButton } from '@/components/Editor/components'
 import { BaseTrigger } from '@/components/Editor/baseComponents'
+import { getLinkContent } from '@/components/Editor/common'
 
 export default {
   name: 'LinkButton',
@@ -78,6 +79,7 @@ export default {
       default: () => [],
     },
     editor: {
+      type: Object,
       required: true,
     },
     isActive: {
@@ -91,38 +93,18 @@ export default {
   },
   data() {
     return {
-      mode: 'add', // 模式 add 新增 | edit 编辑
       params: {
         text: '',
-        link: '',
+        href: '',
       },
     }
   },
   methods: {
     onShow() {
-      const { state } = this.editor.view
-      const { selection, doc } = state
-      const { empty } = selection
-      // 重置模式
-      this.mode = 'add'
-      let text = '',
-        link = ''
-      if (!empty) {
-        // 获取选区内的文本
-        text = doc.textBetween(selection.from, selection.to).trim()
-      }
-      // 获取当前激活的文本和链接
-      const linkData = this.editor.getAttributes('link')
-      if (linkData.href) {
-        link = linkData.href
-        // 此时表示修改已有链接，需要隐藏文本
-        this.mode = 'edit'
-      }
-      this.params.text = text
-      this.params.link = link
+      const { text = '', href = '' } = getLinkContent(this.editor, this.isEdit)
+      this.params = { text, href }
       // 输入框聚焦
-      const refItem =
-        this.mode === 'add' ? (text ? 'linkInputRef' : 'textInputRef') : 'linkInputRef'
+      const refItem = 'textInputRef'
       this.$nextTick(() => {
         this.$refs[refItem].focus()
       })
@@ -130,12 +112,12 @@ export default {
     onSubmit() {
       if (this.checkRequired) return
       // 校验 todo
-      const { text, link } = this.params
+      const { text, href } = this.params
       this.$emit('click', {
         text,
-        href: link,
+        href,
         target: '_blank',
-        mode: this.mode,
+        isEdit: this.isEdit,
       })
       // 手动关闭弹窗
       this.$refs.triggerRef.hide()
@@ -143,10 +125,9 @@ export default {
   },
   computed: {
     checkRequired() {
-      const { text, link } = this.params
+      const { text, href } = this.params
       let check = false
-      if (this.mode === 'add') check = !text.trim() || !link.trim()
-      else check = !link.trim()
+      check = !text.trim() || !href.trim()
       return check
     },
   },

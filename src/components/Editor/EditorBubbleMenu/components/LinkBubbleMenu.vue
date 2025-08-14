@@ -34,6 +34,48 @@
       :is-disabled="false"
       @click="(config) => linkConfig.onClick({ editor, ...config })"
     />
+    <IconButton :tips="['复制链接']" @click="handleCopyLink" ref="copyBtnRef">
+      <svg
+        v-if="copyOk"
+        t="1755137449234"
+        class="icon"
+        viewBox="0 0 1024 1024"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        p-id="7105"
+        width="24"
+        height="24"
+      >
+        <path
+          d="M896 288a32 32 0 0 0-54.656-22.592L418.656 688.096 184.992 396l-0.112 0.08a31.872 31.872 0 1 0-49.76 39.824l-0.112 0.096 256 320 0.112-0.08a31.872 31.872 0 0 0 47.52 2.688l447.952-447.952c5.824-5.808 9.408-13.808 9.408-22.656z"
+          fill="#00b42a"
+          p-id="7106"
+        ></path>
+      </svg>
+      <svg
+        v-else
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        aria-hidden="true"
+        role="img"
+        width="24"
+        height="24"
+        viewBox="-4 -4 32 32"
+        class="iconify iconify--isle-editor"
+        style="color: currentcolor; vertical-align: middle; display: inline-block"
+      >
+        <g
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        >
+          <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+          <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
+        </g>
+      </svg>
+    </IconButton>
     <IconButton :tips="['取消链接']" @click="handleCancelLink">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -73,11 +115,26 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      copyOk: false,
+    }
+  },
   methods: {
     // 访问链接
     handleVisitLink() {
       const { href, target } = this.linkData
       window.open(href, target)
+    },
+    // 复制链接
+    handleCopyLink() {
+      this.editor.chain().focus().run()
+      const { href } = this.linkData
+      navigator.clipboard.writeText(href)
+      this.copyOk = true
+      setTimeout(() => {
+        this.copyOk = false
+      }, 500)
     },
     // 取消链接
     handleCancelLink() {

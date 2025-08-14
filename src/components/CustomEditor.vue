@@ -26,7 +26,7 @@ import StarterKit from '@tiptap/starter-kit'
 import { TextStyleKit } from '@tiptap/extension-text-style'
 import EditorToolbar from '@/components/Editor/EditorToolbar.vue'
 import TitleInput from '@/components/Editor/TitleInput.vue'
-import { ResetOnEnter, FormatBrush, FontFamily, FontSize, ExtendLink } from '@/customExtensions'
+import { ResetOnEnter, FormatBrush, FontFamily, FontSize } from '@/customExtensions'
 import EditorBubbleMenu from '@/components/Editor/EditorBubbleMenu'
 
 export default {
@@ -61,9 +61,7 @@ export default {
     this.editor = new Editor({
       content: this.documentDetail.content,
       extensions: [
-        StarterKit.configure({
-          link: false,
-        }),
+        StarterKit,
         Placeholder.configure({
           placeholder: '输入 / 设置格式，输入空格使用 AI',
         }),
@@ -74,7 +72,6 @@ export default {
         TextStyleKit,
         FontFamily,
         FontSize,
-        ExtendLink,
       ],
       autofocus: this.type === 'add',
       onFocus: () => {
