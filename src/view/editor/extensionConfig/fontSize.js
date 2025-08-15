@@ -20,7 +20,7 @@ const fontSizeOptions = [
 const defaultValue = 14
 export const fontSizeConfig = {
   options: fontSizeOptions,
-  onChange: ({ editor, value }) => {
+  onClick: ({ editor, value }) => {
     const chain = editor.chain().focus()
     // 设置成默认值时,需要重置样式
     if (value === defaultValue) {
@@ -28,12 +28,6 @@ export const fontSizeConfig = {
     } else {
       chain.setFontSize(`${value}px`).run()
     }
-  },
-  getActive: ({ editor }) => {
-    const item = fontSizeOptions.find((item) =>
-      fontSizeConfig.isActive({ editor, value: item.value })
-    )
-    return item ? item.value : defaultValue
   },
   isActive: ({ editor, value }) => editor.isActive('textStyle', { fontSize: value }),
   isDisabled: ({ editor }) => !editor.can().setFontSize(),

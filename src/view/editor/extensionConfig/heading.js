@@ -1,4 +1,4 @@
-const textFormatOptions = [
+const headingOptions = [
   {
     label: '正文',
     content: '正文',
@@ -35,22 +35,19 @@ const textFormatOptions = [
     value: 6,
   },
 ]
-const levels = [1, 2, 3, 4, 5, 6]
-export const textFormatConfig = {
-  options: textFormatOptions,
-  onChange: ({ editor, level }) => {
+export const headingConfig = {
+  options: headingOptions,
+  onClick: ({ editor, value }) => {
+    console.log(value)
     const chain = editor.chain().focus()
-    if (level === 0) chain.setParagraph().run()
-    else chain.setHeading({ level }).run()
+    if (value === 0) chain.setParagraph().run()
+    else chain.setHeading({ level: value }).run()
   },
-  getActive: ({ editor }) => {
-    const isHeadingActive = (level) => {
-      if (level === 0) {
-        return editor.isActive('paragraph')
-      }
-      return editor.isActive('heading', { level })
+  isActive: ({ editor, value }) => {
+    if (value === 0) {
+      return editor.isActive('paragraph')
     }
-    return levels.find((level) => isHeadingActive(level)) || 0
+    return editor.isActive('heading', { level: value })
   },
   isDisabled: () => false,
 }

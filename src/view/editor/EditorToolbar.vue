@@ -7,31 +7,38 @@
         </div>
         <div v-else class="editor-toolbar-item-content">
           <HeadingButton
-            v-if="menu.name === 'textFormat'"
-            :value="menu.getActive({ editor })"
+            v-if="menu.name === 'heading'"
             :options="menu.options"
+            :is-active="(value) => menu.isActive({ editor, value })"
             :is-disabled="disabled || menu.isDisabled({ editor })"
-            @selected="(level) => menu.onChange({ editor, level })"
+            @click="(config) => menu.onClick({ editor, ...config })"
           />
           <FontFamilyButton
             v-else-if="menu.name === 'fontFamily'"
-            :value="menu.getActive({ editor })"
             :options="menu.options"
+            :is-active="(value) => menu.isActive({ editor, value })"
             :is-disabled="disabled || menu.isDisabled({ editor })"
-            @selected="(value) => menu.onChange({ editor, value })"
+            @click="(config) => menu.onClick({ editor, ...config })"
           />
           <FontSizeButton
             v-else-if="menu.name === 'fontSize'"
-            :value="menu.getActive({ editor })"
             :options="menu.options"
+            :is-active="(value) => menu.isActive({ editor, value })"
             :is-disabled="disabled || menu.isDisabled({ editor })"
-            @selected="(value) => menu.onChange({ editor, value })"
+            @click="(config) => menu.onClick({ editor, ...config })"
           />
           <LinkButton
             v-else-if="menu.name === 'link'"
             :tips="menu.tips"
             :editor="editor"
             :is-active="menu.isActive({ editor })"
+            :is-disabled="disabled || menu.isDisabled({ editor })"
+            @click="(config) => menu.onClick({ editor, ...config })"
+          />
+          <TextButton
+            v-else-if="menu.name === 'textStyle'"
+            :value="menu.getActive({ editor })"
+            :options="menu.options"
             :is-disabled="disabled || menu.isDisabled({ editor })"
             @click="(config) => menu.onClick({ editor, ...config })"
           />
@@ -54,15 +61,15 @@
 </template>
 
 <script>
-import { TOOLBAR_MENU_LIST, toolbarPathNameMap } from '@/components/Editor/common'
+import { TOOLBAR_MENU_LIST, toolbarPathNameMap } from './common'
 import {
   FontFamilyButton,
   HeadingButton,
-  IconButton,
   FontSizeButton,
   LinkButton,
-} from '@/components/Editor/components'
-import { boldConfig } from '@/components/Editor/extensionConfig/bold'
+  TextButton,
+} from './components'
+import { boldConfig } from './extensionConfig/bold'
 import {
   blockquoteConfig,
   bulletListConfig,
@@ -81,17 +88,19 @@ import {
   subscriptConfig,
   superscriptConfig,
   taskListConfig,
-  textFormatConfig,
+  headingConfig,
+  textStyleConfig,
   underlineConfig,
   undoConfig,
-} from '@/components/Editor/extensionConfig'
-import { Divider } from '@/components/Editor/baseComponents'
+} from './extensionConfig'
+import { Divider, IconButton } from '@/components'
 
 export default {
   name: 'EditorToolbar',
   components: {
     Divider,
     LinkButton,
+    TextButton,
     FontSizeButton,
     FontFamilyButton,
     HeadingButton,
@@ -119,13 +128,14 @@ export default {
         undo: undoConfig,
         redo: redoConfig,
         formatBrush: formatBrushConfig,
-        textFormat: textFormatConfig,
+        heading: headingConfig,
         fontFamily: fontFamilyConfig,
         fontSize: fontSizeConfig,
         bold: boldConfig,
         italic: italicConfig,
         underline: underlineConfig,
         strike: strikeConfig,
+        textStyle: textStyleConfig,
         code: codeConfig,
         subscript: subscriptConfig,
         superscript: superscriptConfig,
@@ -154,7 +164,7 @@ export default {
       return this.menuList
         .map((name) => {
           if (name === '|') return { name: '|' }
-          if (['textFormat', 'fontFamily', 'fontSize'].includes(name)) {
+          if (['heading', 'fontFamily', 'fontSize', 'textStyle'].includes(name)) {
             return {
               name,
               ...this.toolbarProp[name],

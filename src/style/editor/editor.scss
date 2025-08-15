@@ -15,6 +15,7 @@
   & > :first-child {
     margin-top: 0;
   }
+  .is-empty:has(>.ProseMirror-trailingBreak:only-child)::before,
   .is-editor-empty:first-child::before {
     color: #bbbbbb;
     content: attr(data-placeholder);

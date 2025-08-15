@@ -3,7 +3,7 @@
     <div class="base-trigger__btn" ref="triggerRef">
       <slot name="default"></slot>
     </div>
-    <div class="base-trigger__content" ref="tooltipContentRef">
+    <div class="drop-menu-container" ref="tooltipContentRef">
       <slot name="content"></slot>
     </div>
   </div>
@@ -23,17 +23,24 @@ export default {
       type: Boolean,
       default: false,
     },
+    trigger: {
+      type: String,
+      default: 'click',
+    },
   },
   mounted() {
     this.tippyInstance = createTippy(this.$refs.triggerRef, {
       content: this.$refs.tooltipContentRef,
-      trigger: 'click',
+      trigger: this.trigger,
       hideOnClick: true,
       placement: 'bottom',
       // appendTo: 'parent',
       ...this.tippyOptions,
       onShow: (instance) => {
         this.$emit('show', instance)
+      },
+      onHide: (instance) => {
+        this.$emit('hide', instance)
       },
     })
   },
@@ -64,12 +71,5 @@ export default {
 
 <style lang="scss">
 .base-trigger__content {
-  background: #ffffff;
-  border: 1px solid #e9e9e9;
-  overflow: auto;
-  box-shadow: 0 2px 5px 2px #0000001a;
-  padding: 5px 0;
-  border-radius: 3px;
-  color: #333333;
 }
 </style>

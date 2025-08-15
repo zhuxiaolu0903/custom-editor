@@ -1,5 +1,5 @@
 <template>
-  <BaseTooltip :disabled="!tips">
+  <BaseTooltip :disabled="tips.length === 0">
     <div slot="content" class="tip-content">
       <p class="base-tooltip-text" v-for="name in tips" :key="name">{{ name }}</p>
     </div>
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { BaseTooltip } from '@/components/Editor/baseComponents'
+import { BaseTooltip } from '@/components'
 
 export default {
   name: 'IconButton',
@@ -56,6 +56,7 @@ export default {
 .icon-btn {
   display: flex;
   gap: 4px;
+  border-radius: 4px;
   &.is-disabled svg {
     cursor: not-allowed;
     path,
@@ -70,12 +71,9 @@ export default {
       fill: #0000ee;
     }
   }
-}
-svg {
-  border-radius: 4px;
-  cursor: pointer;
-  &:hover {
+  &:not(.is-disabled):hover {
     background-color: #f2f3f5;
+    cursor: pointer;
   }
 }
 </style>

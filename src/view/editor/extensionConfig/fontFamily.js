@@ -8,17 +8,10 @@ const fontFamilyOptions = [
   // { label: '方正仿宋简体_GBK', value: 'FangSong_GB2312' },
   { label: 'Arial', value: 'Arial' },
 ]
-const defaultValue = ''
 export const fontFamilyConfig = {
   options: fontFamilyOptions,
-  onChange: ({ editor, value }) => {
+  onClick: ({ editor, value }) => {
     editor.chain().focus().setFontFamily(value).run()
-  },
-  getActive: ({ editor }) => {
-    const item = fontFamilyOptions.find((item) =>
-      fontFamilyConfig.isActive({ editor, value: item.value })
-    )
-    return item ? item.value : defaultValue
   },
   isActive: ({ editor, value }) => editor.isActive('textStyle', { fontFamily: value }),
   isDisabled: ({ editor }) => !editor.can().setFontFamily(),

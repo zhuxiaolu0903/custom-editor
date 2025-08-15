@@ -1,0 +1,42 @@
+.toolbar-select-button-wrapper {
+    position: relative;
+    top: -2px;
+    height: 24px;
+    .el-input__inner {
+        padding: 0;
+        height: 24px;
+        line-height: 24px;
+        border: none;
+        border-radius: 0;
+        font-size: 14px;
+    }
+    .el-input__icon {
+        width: 14px;
+        line-height: 24px;
+    }
+}
+.select-btn-container {
+    .icon-btn {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 0 4px;
+        .fold-icon-container {
+            transition: transform 0.5s ease;
+        }
+        &:not(.is-disabled):hover .fold-icon-container,
+        .fold-icon-container.folding {
+            transform: rotate(180deg);
+        }
+        &.is-disabled {
+            .selected-content {
+                color: #c8c9cc;
+            }
+        }
+    }
+    .selected-content {
+        font-size: 14px;
+        color: #74767a;
+        line-height: 24px;
+    }
+}

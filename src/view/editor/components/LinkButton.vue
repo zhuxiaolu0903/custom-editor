@@ -37,7 +37,7 @@
         </g>
       </svg>
     </IconButton>
-    <div class="link-button-content" slot="content">
+    <div class="link-button-content drop-menu-container" slot="content">
       <el-form :model="params" label-width="40px" size="small">
         <el-form-item label="文本" prop="text">
           <el-input ref="textInputRef" v-model="params.text" placeholder="标题"></el-input>
@@ -61,9 +61,8 @@
 </template>
 
 <script>
-import { IconButton } from '@/components/Editor/components'
-import { BaseTrigger } from '@/components/Editor/baseComponents'
-import { getLinkContent } from '@/components/Editor/common'
+import { BaseTrigger, IconButton } from '@/components'
+import { getLinkContent } from '../common'
 
 export default {
   name: 'LinkButton',
@@ -136,7 +135,6 @@ export default {
 
 <style scoped lang="scss">
 .link-button-content {
-  padding: 13px 16px;
   .form-footer {
     display: flex;
     justify-content: flex-end;

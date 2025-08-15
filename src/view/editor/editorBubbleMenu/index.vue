@@ -9,7 +9,7 @@
 
 <script>
 import { BubbleMenu } from './BubbleMenu'
-import { LinkBubbleMenu, BaseBubbleMenu } from '@/components/Editor/EditorBubbleMenu/components'
+import { LinkBubbleMenu, BaseBubbleMenu } from './components'
 import { getTextBetween } from '@tiptap/vue-2'
 
 export default {

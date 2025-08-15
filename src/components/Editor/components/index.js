@@ -1,5 +1,0 @@
-export { default as HeadingButton } from './HeadingButton'
-export { default as IconButton } from './IconButton'
-export { default as FontFamilyButton } from './FontFamilyButton'
-export { default as FontSizeButton } from './FontSizeButton'
-export { default as LinkButton } from './LinkButton'

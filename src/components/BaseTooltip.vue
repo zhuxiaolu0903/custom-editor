@@ -1,7 +1,7 @@
 <template>
   <div class="base-tooltip-wrapper" ref="triggerRef">
     <slot name="default"></slot>
-    <div class="base-tooltip" ref="tooltipContentRef">
+    <div class="base-tooltip" ref="tooltipContentRef" v-if="!disabled">
       <slot name="content"></slot>
     </div>
   </div>
@@ -23,19 +23,21 @@ export default {
     },
   },
   mounted() {
-    this.tippyInstance = createTippy(this.$refs.triggerRef, {
-      content: this.$refs.tooltipContentRef,
-      allowHTML: false,
-      duration: 0,
-      getReferenceClientRect: null,
-      interactive: true,
-      trigger: 'mouseenter',
-      placement: 'top',
-      delay: [500, 250],
-      hideOnClick: true,
-      appendTo: () => document.body,
-      ...this.tippyOptions,
-    })
+    if (!this.disabled) {
+      this.tippyInstance = createTippy(this.$refs.triggerRef, {
+        content: this.$refs.tooltipContentRef,
+        allowHTML: false,
+        duration: 0,
+        getReferenceClientRect: null,
+        interactive: true,
+        trigger: 'mouseenter',
+        placement: 'top',
+        delay: [500, 250],
+        hideOnClick: true,
+        appendTo: () => document.body,
+        ...this.tippyOptions,
+      })
+    }
   },
   methods: {
     enable() {

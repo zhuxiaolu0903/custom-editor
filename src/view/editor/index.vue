@@ -24,18 +24,18 @@ import { Editor, EditorContent } from '@tiptap/vue-2'
 import { Placeholder } from '@tiptap/extensions'
 import StarterKit from '@tiptap/starter-kit'
 import { TextStyleKit } from '@tiptap/extension-text-style'
-import EditorToolbar from '@/components/Editor/EditorToolbar.vue'
-import TitleInput from '@/components/Editor/TitleInput.vue'
+import EditorToolbar from './EditorToolbar.vue'
+import TitleInput from './TitleInput.vue'
 import {
   ResetOnEnterExt,
   FormatBrushExt,
   FontFamilyExt,
   FontSizeExt,
   CodeBlockExt,
-} from '@/customExtensions'
-import EditorBubbleMenu from '@/components/Editor/EditorBubbleMenu'
+} from './customExtensions'
+import EditorBubbleMenu from './editorBubbleMenu/index.vue'
 import { all, createLowlight } from 'lowlight'
-import { languages } from '@/customExtensions/CodeBlockExt'
+import { languages } from './customExtensions/CodeBlockExt'
 
 export default {
   components: {

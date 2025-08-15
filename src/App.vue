@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import CustomEditor from './components/CustomEditor.vue'
+import CustomEditor from '@/view/editor'
 
 export default {
   name: 'App',

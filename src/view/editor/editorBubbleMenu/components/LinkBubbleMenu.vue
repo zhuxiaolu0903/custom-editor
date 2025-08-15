@@ -102,10 +102,9 @@
 </template>
 
 <script>
-import { Divider } from '@/components/Editor/baseComponents'
-import IconButton from '@/components/Editor/components/IconButton.vue'
-import { LinkButton } from '@/components/Editor/components'
-import { linkConfig } from '@/components/Editor/extensionConfig'
+import { Divider, IconButton } from '@/components'
+import { LinkButton } from '../../components'
+import { linkConfig } from '../../extensionConfig'
 
 export default {
   name: 'LinkBubbleMenu',

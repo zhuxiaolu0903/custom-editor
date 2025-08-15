@@ -75,7 +75,6 @@ export const CodeBlockExt = CodeBlockLowlight.extend({
     return {
       ...this.parent?.(),
       defaultLanguage: null,
-      lowlight: {},
       languages: [],
     }
   },
@@ -111,6 +110,7 @@ export const CodeBlockExt = CodeBlockLowlight.extend({
       // 语言下拉框
       const createEL = () => {
         const div = document.createElement('div')
+        div.classList.add('drop-menu-container')
         div.classList.add('code-block-lang')
         div.innerHTML = `
                 ${this.options.languages
