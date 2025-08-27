@@ -1,10 +1,8 @@
 export const taskListConfig = {
   tips: ['待办列表', 'Markdown: [] + 空格'],
-  onClick: ({ editor, range }) => {
-    range
-      ? editor.chain().focus().deleteRange(range).toggleTaskList().run()
-      : editor.commands.toggleTaskList()
+  onClick: ({ editor }) => {
+    editor.chain().focus().toggleTaskList().run()
   },
   isActive: ({ editor }) => editor.isActive('taskList'),
-  isDisabled: ({ editor }) => !editor.can().toggleTaskList(),
+  isDisabled: () => false,
 }

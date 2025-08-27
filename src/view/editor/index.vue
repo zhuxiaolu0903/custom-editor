@@ -32,10 +32,17 @@ import {
   FontFamilyExt,
   FontSizeExt,
   CodeBlockExt,
+  CustomLineHeightExt,
+  IndentExt,
 } from './customExtensions'
 import EditorBubbleMenu from './editorBubbleMenu/index.vue'
 import { all, createLowlight } from 'lowlight'
 import { languages } from './customExtensions/CodeBlockExt'
+import Highlight from '@tiptap/extension-highlight'
+import Subscript from '@tiptap/extension-subscript'
+import Superscript from '@tiptap/extension-superscript'
+import TextAlign from '@tiptap/extension-text-align'
+import { TaskItem, TaskList } from '@tiptap/extension-list'
 
 export default {
   components: {
@@ -85,6 +92,20 @@ export default {
           defaultLanguage: 'auto',
           languages,
         }),
+        Highlight.configure({
+          multicolor: true,
+        }),
+        Subscript,
+        Superscript,
+        TextAlign.configure({
+          types: ['heading', 'paragraph'],
+        }),
+        CustomLineHeightExt,
+        TaskList,
+        TaskItem.configure({
+          nested: true,
+        }),
+        IndentExt,
       ],
       autofocus: this.type === 'add',
       onFocus: () => {
@@ -117,7 +138,7 @@ export default {
   }
   .custom-editor-container {
     flex: 1;
-    padding: 24px 60px 0 60px;
+    padding: 24px 60px 60px 60px;
     overflow-y: auto;
     .custom-editor-content {
       margin-top: 24px;

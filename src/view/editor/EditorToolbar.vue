@@ -35,10 +35,24 @@
             :is-disabled="disabled || menu.isDisabled({ editor })"
             @click="(config) => menu.onClick({ editor, ...config })"
           />
-          <TextButton
-            v-else-if="menu.name === 'textStyle'"
-            :value="menu.getActive({ editor })"
+          <FontStyleButton
+            v-else-if="menu.name === 'fontStyle'"
+            :editor="editor"
+            :is-active="(value) => menu.isActive({ editor, ...value })"
+            :is-disabled="disabled || menu.isDisabled({ editor })"
+            @click="(config) => menu.onClick({ editor, ...config })"
+          />
+          <TextAlignButton
+            v-else-if="menu.name === 'textAlign'"
             :options="menu.options"
+            :is-active="(value) => menu.isActive({ editor, value })"
+            :is-disabled="disabled || menu.isDisabled({ editor })"
+            @click="(config) => menu.onClick({ editor, ...config })"
+          />
+          <LineHeightButton
+            v-else-if="menu.name === 'lineHeight'"
+            :options="menu.options"
+            :is-active="(value) => menu.isActive({ editor, value })"
             :is-disabled="disabled || menu.isDisabled({ editor })"
             @click="(config) => menu.onClick({ editor, ...config })"
           />
@@ -46,13 +60,11 @@
             v-else
             :tips="menu.tips"
             @click="menu.onClick({ editor })"
-            @dblclick="menu.onDoubleClick({ editor })"
+            @dblclick="menu.onDoubleClick && menu.onDoubleClick({ editor })"
             :is-active="menu.isActive({ editor })"
             :is-disabled="disabled || menu.isDisabled({ editor })"
           >
-            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
-              <g fill="#39404D" fill-rule="evenodd" v-html="pathName(menu.name)"></g>
-            </svg>
+            <span style="display: flex" v-html="pathName(menu.name)"></span>
           </IconButton>
         </div>
       </div>
@@ -67,7 +79,9 @@ import {
   HeadingButton,
   FontSizeButton,
   LinkButton,
-  TextButton,
+  FontStyleButton,
+  TextAlignButton,
+  LineHeightButton,
 } from './components'
 import { boldConfig } from './extensionConfig/bold'
 import {
@@ -89,9 +103,13 @@ import {
   superscriptConfig,
   taskListConfig,
   headingConfig,
-  textStyleConfig,
+  fontStyleConfig,
   underlineConfig,
   undoConfig,
+  textAlignConfig,
+  lineHeightConfig,
+  indentConfig,
+  outdentConfig,
 } from './extensionConfig'
 import { Divider, IconButton } from '@/components'
 
@@ -100,11 +118,13 @@ export default {
   components: {
     Divider,
     LinkButton,
-    TextButton,
+    FontStyleButton,
     FontSizeButton,
     FontFamilyButton,
     HeadingButton,
     IconButton,
+    TextAlignButton,
+    LineHeightButton,
   },
   props: {
     // 工具栏是否禁用
@@ -135,7 +155,7 @@ export default {
         italic: italicConfig,
         underline: underlineConfig,
         strike: strikeConfig,
-        textStyle: textStyleConfig,
+        fontStyle: fontStyleConfig,
         code: codeConfig,
         subscript: subscriptConfig,
         superscript: superscriptConfig,
@@ -147,6 +167,10 @@ export default {
         blockquote: blockquoteConfig,
         decreaseIndent: decreaseIndentConfig,
         increaseIndent: increaseIndentConfig,
+        textAlign: textAlignConfig,
+        lineHeight: lineHeightConfig,
+        indent: indentConfig,
+        outdent: outdentConfig,
       },
     }
   },
@@ -156,23 +180,10 @@ export default {
     },
   },
   computed: {
-    // 编辑器中内置扩展
-    extensions() {
-      return this.editor?.extensionManager?.extensions || []
-    },
     toolbarMenus() {
       return this.menuList
         .map((name) => {
           if (name === '|') return { name: '|' }
-          if (['heading', 'fontFamily', 'fontSize', 'textStyle'].includes(name)) {
-            return {
-              name,
-              ...this.toolbarProp[name],
-            }
-          }
-          // 查找编辑器中内置扩展的匹配项
-          const extension = this.extensions.find((ext) => ext.name === name)
-          if (!extension) return null
           if (name === 'undoRedo') {
             // 撤销/恢复 拆分为两个按钮
             return ['undo', 'redo'].map((item) => {
