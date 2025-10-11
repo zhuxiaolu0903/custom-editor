@@ -89,11 +89,9 @@ import {
   bulletListConfig,
   codeBlockConfig,
   codeConfig,
-  decreaseIndentConfig,
   fontFamilyConfig,
   fontSizeConfig,
   formatBrushConfig,
-  increaseIndentConfig,
   italicConfig,
   linkConfig,
   orderedListConfig,
@@ -110,6 +108,7 @@ import {
   lineHeightConfig,
   indentConfig,
   outdentConfig,
+  imageConfig,
 } from './extensionConfig'
 import { Divider, IconButton } from '@/components'
 
@@ -165,12 +164,11 @@ export default {
         orderedList: orderedListConfig,
         taskList: taskListConfig,
         blockquote: blockquoteConfig,
-        decreaseIndent: decreaseIndentConfig,
-        increaseIndent: increaseIndentConfig,
         textAlign: textAlignConfig,
         lineHeight: lineHeightConfig,
         indent: indentConfig,
         outdent: outdentConfig,
+        image: imageConfig,
       },
     }
   },

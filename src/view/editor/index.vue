@@ -34,15 +34,19 @@ import {
   CodeBlockExt,
   CustomLineHeightExt,
   IndentExt,
-} from './customExtensions'
+} from './custom/extensions'
+import { ImageUploadNode } from './custom/nodes'
 import EditorBubbleMenu from './editorBubbleMenu/index.vue'
 import { all, createLowlight } from 'lowlight'
-import { languages } from './customExtensions/CodeBlockExt'
+import { languages } from '@/view/editor/custom/extensions/CodeBlockExt'
 import Highlight from '@tiptap/extension-highlight'
 import Subscript from '@tiptap/extension-subscript'
 import Superscript from '@tiptap/extension-superscript'
 import TextAlign from '@tiptap/extension-text-align'
 import { TaskItem, TaskList } from '@tiptap/extension-list'
+import Mention from '@tiptap/extension-mention'
+import { suggestion } from './extensionConfig'
+import { handleImageUpload, MAX_FILE_SIZE } from '@/view/editor/common'
 
 export default {
   components: {
@@ -106,6 +110,19 @@ export default {
           nested: true,
         }),
         IndentExt,
+        Mention.configure({
+          HTMLAttributes: {
+            class: 'mention',
+          },
+          suggestion,
+        }),
+        ImageUploadNode.configure({
+          accept: 'image/*',
+          maxSize: MAX_FILE_SIZE,
+          limit: 3,
+          upload: handleImageUpload,
+          onError: (error) => console.error('Upload failed:', error),
+        }),
       ],
       autofocus: this.type === 'add',
       onFocus: () => {

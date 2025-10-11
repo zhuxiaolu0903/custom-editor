@@ -29,6 +29,7 @@ export const TOOLBAR_MENU_LIST = [
   '|',
   'link',
   'codeBlock',
+  'image',
 ]
 
 // 工具栏图标集合
@@ -46,7 +47,7 @@ export const toolbarPathNameMap = {
     '<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg"><g fill="#39404D" fill-rule="evenodd" ><path d="M5 11.5h14V13H5z"></path><path d="M8 9a4 4 0 118 0h-1.5a2.5 2.5 0 10-2.5 2.5V13a4 4 0 01-4-4z"></path><path d="M12 17.5a2.5 2.5 0 001.488-4.51l.503-1.46A4 4 0 118 15h1.5a2.5 2.5 0 002.5 2.5z"></path></g></svg>',
   code: '<svg t="1754025195464" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="12658" width="24" height="24"><path d="M597.333333 667.178667l180.053334-176.512L597.333333 314.154667 656.64 256 896 490.666667 656.64 725.333333zM203.946667 490.666667L384 667.178667 324.693333 725.333333 85.333333 490.666667 324.693333 256 384 314.154667z" fill="#39404D" p-id="12659"></path></svg>',
   codeBlock:
-    '<svg t="1754025486879" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="20070" width="20" height="20" transform="translate(2 2)"><path d="M606 83c23.4 6.7 37.7 29.6 34.3 53l-1.4 6.4-204.9 717c-7.3 25.5-33.9 40.2-59.3 33-23.4-6.7-37.7-29.6-34.3-53l1.4-6.4 204.9-717c7.3-25.6 33.8-40.3 59.3-33zM284 287.6c16.8 17.2 18.1 43.9 3.9 62.6l-4.7 5.3-147 143.4 147.6 148.6c17 17.1 18.4 43.8 4.4 62.5l-4.7 5.4c-17.1 17-43.8 18.4-62.5 4.4l-5.4-4.7-181.7-183c-17.1-17.2-18.4-44.1-4.2-62.8l4.7-5.4 181.7-177.3c19-18.4 49.4-18 67.9 1z m453.6 0c18.5-19 48.9-19.3 67.9-0.8L987.2 464l4.7 5.4c14.2 18.7 12.9 45.6-4.2 62.8L806 715.2l-5.4 4.7c-18.7 14-45.4 12.6-62.5-4.4l-4.7-5.4c-14-18.7-12.6-45.4 4.4-62.5L885.4 499l-147-143.4-4.7-5.3c-14.1-18.8-12.9-45.5 3.9-62.7z" p-id="20071"></path></svg>',
+    '<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" class="mp-icon-container"><g fill="#39404D" fill-rule="evenodd"><path d="M9.096 9.303l-2.475 2.475 2.475 2.475-1.06 1.06-2.829-2.828a1 1 0 010-1.414l2.829-2.828 1.06 1.06zm10.253 1.768a1 1 0 010 1.414l-2.828 2.829-1.06-1.061 2.474-2.475-2.475-2.475 1.06-1.06 2.83 2.828zM12.735 6l1.449.388-2.847 10.626-1.449-.389z"></path></g></svg>',
   subscript:
     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="-2 -2 28 28"><path d="M5.59567 4L10.5 9.92831L15.4043 4H18L11.7978 11.4971L18 18.9943V19H15.4091L10.5 13.0659L5.59092 19H3V18.9943L9.20216 11.4971L3 4H5.59567ZM21.8 16C21.8 15.5582 21.4418 15.2 21 15.2C20.5582 15.2 20.2 15.5582 20.2 16C20.2 16.0762 20.2107 16.15 20.2306 16.2198L19.0765 16.5496C19.0267 16.375 19 16.1906 19 16C19 14.8954 19.8954 14 21 14C22.1046 14 23 14.8954 23 16C23 16.5727 22.7593 17.0892 22.3735 17.4538L20.7441 19H23V20H19V19L21.5507 16.5803C21.7042 16.4345 21.8 16.2284 21.8 16Z"></path></svg>',
   superscript:
@@ -66,6 +67,8 @@ export const toolbarPathNameMap = {
     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="-2 -2 28 28"><path d="M3 4H21V6H3V4ZM3 19H21V21H3V19ZM11 14H21V16H11V14ZM11 9H21V11H11V9ZM7 12.5L3 16V9L7 12.5Z"></path></svg>',
   hardBreak:
     '<svg t="1754025137706" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10790" width="24" height="24"><path d="M621.696 704h54.848a91.392 91.392 0 1 0 0-182.848H219.52a36.544 36.544 0 0 1 0-73.152h457.152a164.608 164.608 0 0 1 0 329.152h-54.912v36.544a18.304 18.304 0 0 1-29.248 14.656l-78.016-58.496a36.672 36.672 0 0 1 0-58.56l78.08-58.496a18.304 18.304 0 0 1 29.184 14.656V704zM219.52 192h585.152a36.544 36.544 0 0 1 0 73.152H219.392a36.544 36.544 0 1 1 0-73.152z m182.848 548.544a36.608 36.608 0 0 1-36.608 36.608H219.52a36.608 36.608 0 0 1 0-73.152h146.24a36.544 36.544 0 0 1 36.608 36.544z" p-id="10791"></path></svg>',
+  image:
+    '<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" className="mp-icon-container"><g fill="#39404D" transform="translate(5 6)" fill-rule="evenodd"><path d="M14 0a1 1 0 011 1v11a1 1 0 01-1 1H1a1 1 0 01-1-1V1a1 1 0 011-1h13zm-.5 1.6h-12v10h12v-10z"></path><circle cx="5.25" cy="4.25" r="1.25"></circle><path d="M11 5l2.999 3L14 12l.249-.001L14 13H6v-.001L1 13l-.334-1.001L1 12 .999 9.25 4 7l2.501 2.5L11 5z"></path></g></svg>',
 }
 
 // 获取激活的链接文本或者选中的文本和激活的链接
@@ -101,4 +104,29 @@ export const getLinkContent = (editor, isEdit = false) => {
     text,
     href,
   }
+}
+
+export const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB
+
+export const handleImageUpload = async (file, onProgress, abortSignal) => {
+  // Validate file
+  if (!file) {
+    throw new Error('No file provided')
+  }
+
+  if (file.size > MAX_FILE_SIZE) {
+    throw new Error(`File size exceeds maximum allowed (${MAX_FILE_SIZE / (1024 * 1024)}MB)`)
+  }
+
+  // For demo/testing: Simulate upload progress. In production, replace the following code
+  // with your own upload implementation.
+  for (let progress = 0; progress <= 100; progress += 10) {
+    if (abortSignal?.aborted) {
+      throw new Error('Upload cancelled')
+    }
+    await new Promise((resolve) => setTimeout(resolve, 500))
+    onProgress?.({ progress })
+  }
+
+  return '/images/tiptap-ui-placeholder-image.jpg'
 }
