@@ -1,11 +1,11 @@
 import { BubbleMenuPlugin } from '@tiptap/extension-bubble-menu'
 
-export const BubbleMenu = {
-  name: 'BubbleMenu',
+export const LinkBubble = {
+  name: 'LinkBubble',
   props: {
     pluginKey: {
       type: [String],
-      default: 'bubbleMenu',
+      default: 'LinkBubble',
     },
     editor: {
       type: Object,
@@ -20,14 +20,6 @@ export const BubbleMenu = {
     },
     resizeDelay: {
       type: Number,
-    },
-    shouldShow: {
-      type: Function,
-      default: null,
-    },
-    tippyOptions: {
-      type: Object,
-      default: null,
     },
   },
   watch: {
@@ -48,8 +40,9 @@ export const BubbleMenu = {
               editor,
               element: this.$el,
               pluginKey: this.pluginKey,
-              shouldShow: this.shouldShow,
-              tippyOptions: this.tippyOptions,
+              shouldShow: () => {
+                return this.editor.isActive('link')
+              },
             })
           )
         })

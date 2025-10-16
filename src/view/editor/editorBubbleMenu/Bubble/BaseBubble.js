@@ -1,11 +1,12 @@
 import { BubbleMenuPlugin } from '@tiptap/extension-bubble-menu'
+import { getTextBetween } from '@tiptap/vue-2'
 
-export const BubbleMenu = {
-  name: 'BubbleMenu',
+export const BaseBubble = {
+  name: 'BaseBubble',
   props: {
     pluginKey: {
       type: [String],
-      default: 'bubbleMenu',
+      default: 'BaseBubble',
     },
     editor: {
       type: Object,
@@ -20,14 +21,6 @@ export const BubbleMenu = {
     },
     resizeDelay: {
       type: Number,
-    },
-    shouldShow: {
-      type: Function,
-      default: null,
-    },
-    tippyOptions: {
-      type: Object,
-      default: null,
     },
   },
   watch: {
@@ -48,8 +41,20 @@ export const BubbleMenu = {
               editor,
               element: this.$el,
               pluginKey: this.pluginKey,
-              shouldShow: this.shouldShow,
-              tippyOptions: this.tippyOptions,
+              shouldShow: () => {
+                const {
+                  state: { selection },
+                } = editor
+                // 基础气泡扩展的显示条件：选区不为空
+                return (
+                  !selection.empty &&
+                  getTextBetween(editor.state.doc, {
+                    from: selection.from,
+                    to: selection.to,
+                  }).trim().length > 0
+                )
+              },
+              tippyOptions: {},
             })
           )
         })

@@ -11,21 +11,21 @@
             :options="menu.options"
             :is-active="(value) => menu.isActive({ editor, value })"
             :is-disabled="disabled || menu.isDisabled({ editor })"
-            @click="(config) => menu.onClick({ editor, ...config })"
+            @click="(value) => menu.onClick({ editor, ...value })"
           />
           <FontFamilyButton
             v-else-if="menu.name === 'fontFamily'"
             :options="menu.options"
             :is-active="(value) => menu.isActive({ editor, value })"
             :is-disabled="disabled || menu.isDisabled({ editor })"
-            @click="(config) => menu.onClick({ editor, ...config })"
+            @click="(value) => menu.onClick({ editor, ...value })"
           />
           <FontSizeButton
             v-else-if="menu.name === 'fontSize'"
             :options="menu.options"
             :is-active="(value) => menu.isActive({ editor, value })"
             :is-disabled="disabled || menu.isDisabled({ editor })"
-            @click="(config) => menu.onClick({ editor, ...config })"
+            @click="(value) => menu.onClick({ editor, ...value })"
           />
           <LinkButton
             v-else-if="menu.name === 'link'"
@@ -33,28 +33,35 @@
             :editor="editor"
             :is-active="menu.isActive({ editor })"
             :is-disabled="disabled || menu.isDisabled({ editor })"
-            @click="(config) => menu.onClick({ editor, ...config })"
+            @click="(value) => menu.onClick({ editor, ...value })"
           />
           <FontStyleButton
             v-else-if="menu.name === 'fontStyle'"
             :editor="editor"
             :is-active="(value) => menu.isActive({ editor, ...value })"
             :is-disabled="disabled || menu.isDisabled({ editor })"
-            @click="(config) => menu.onClick({ editor, ...config })"
+            @click="(value) => menu.onClick({ editor, ...value })"
           />
           <TextAlignButton
             v-else-if="menu.name === 'textAlign'"
             :options="menu.options"
             :is-active="(value) => menu.isActive({ editor, value })"
             :is-disabled="disabled || menu.isDisabled({ editor })"
-            @click="(config) => menu.onClick({ editor, ...config })"
+            @click="(value) => menu.onClick({ editor, ...value })"
           />
           <LineHeightButton
             v-else-if="menu.name === 'lineHeight'"
             :options="menu.options"
             :is-active="(value) => menu.isActive({ editor, value })"
             :is-disabled="disabled || menu.isDisabled({ editor })"
-            @click="(config) => menu.onClick({ editor, ...config })"
+            @click="(value) => menu.onClick({ editor, ...value })"
+          />
+          <ImageButton
+            v-else-if="menu.name === 'image'"
+            :editor="editor"
+            :tips="menu.tips"
+            @change="(value) => menu.onChange({ editor, ...value })"
+            :is-disabled="disabled || menu.isDisabled({ editor })"
           />
           <IconButton
             v-else
@@ -111,10 +118,12 @@ import {
   imageConfig,
 } from './extensionConfig'
 import { Divider, IconButton } from '@/components'
+import ImageButton from '@/view/editor/components/ImageButton.vue'
 
 export default {
   name: 'EditorToolbar',
   components: {
+    ImageButton,
     Divider,
     LinkButton,
     FontStyleButton,

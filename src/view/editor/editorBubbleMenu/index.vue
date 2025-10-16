@@ -1,48 +1,50 @@
 <template>
-  <BubbleMenu :editor="editor" :shouldShow="shouldShow">
-    <div class="bubble-menu-container">
-      <LinkBubbleMenu v-if="isLink" :editor="editor" />
-      <BaseBubbleMenu v-else />
-    </div>
-  </BubbleMenu>
+  <div class="bubble-menu-wrapper">
+    <LinkBubble :editor="editor">
+      <div class="bubble-menu-container">
+        <LinkBubbleMenu :editor="editor" />
+      </div>
+    </LinkBubble>
+    <ImageBubble :editor="editor">
+      <div class="bubble-menu-container">
+        <ImageBubbleMenu :editor="editor" />
+      </div>
+    </ImageBubble>
+    <BaseBubble :editor="editor">
+      <div class="bubble-menu-container">
+        <BaseBubbleMenu :editor="editor" />
+      </div>
+    </BaseBubble>
+  </div>
 </template>
 
 <script>
-import { BubbleMenu } from './BubbleMenu'
-import { LinkBubbleMenu, BaseBubbleMenu } from './components'
-import { getTextBetween } from '@tiptap/vue-2'
+import { BaseBubble, LinkBubble, ImageBubble } from './Bubble'
+import { BaseBubbleMenu, LinkBubbleMenu, ImageBubbleMenu } from './components'
 
 export default {
   name: 'index',
-  components: { BubbleMenu, LinkBubbleMenu, BaseBubbleMenu },
+  components: {
+    BaseBubbleMenu,
+    LinkBubbleMenu,
+    ImageBubbleMenu,
+    BaseBubble,
+    LinkBubble,
+    ImageBubble,
+  },
   props: {
     editor: {
       type: Object,
       required: true,
     },
   },
-  methods: {
-    // 这里的回调用于：鼠标未选中内容时，如果当前激活的是图标或者链接，也能显示气泡菜单
-    shouldShow({ editor }) {
-      // 链接气泡扩展
-      if (this.isLink) return editor.isActive('link')
-      const {
-        state: { selection },
-      } = editor
-      // 基础气泡扩展
-      return (
-        !selection.empty &&
-        getTextBetween(editor.state.doc, {
-          from: selection.from,
-          to: selection.to,
-        }).trim().length > 0 &&
-        !editor.isActive('link')
-      )
-    },
-  },
+  methods: {},
   computed: {
     isLink() {
       return this.editor.isActive('link')
+    },
+    isImage() {
+      return this.editor.isActive('imageNode')
     },
   },
 }

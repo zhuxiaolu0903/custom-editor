@@ -35,7 +35,7 @@ import {
   CustomLineHeightExt,
   IndentExt,
 } from './custom/extensions'
-import { ImageUploadNode } from './custom/nodes'
+import { ImageNode } from './custom/nodes'
 import EditorBubbleMenu from './editorBubbleMenu/index.vue'
 import { all, createLowlight } from 'lowlight'
 import { languages } from '@/view/editor/custom/extensions/CodeBlockExt'
@@ -46,7 +46,6 @@ import TextAlign from '@tiptap/extension-text-align'
 import { TaskItem, TaskList } from '@tiptap/extension-list'
 import Mention from '@tiptap/extension-mention'
 import { suggestion } from './extensionConfig'
-import { handleImageUpload, MAX_FILE_SIZE } from '@/view/editor/common'
 
 export default {
   components: {
@@ -116,11 +115,20 @@ export default {
           },
           suggestion,
         }),
-        ImageUploadNode.configure({
-          accept: 'image/*',
+        /*ImageUploadNode.configure({
+          accept: 'image/!*',
           maxSize: MAX_FILE_SIZE,
           limit: 3,
           upload: handleImageUpload,
+          onError: (error) => console.error('Upload failed:', error),
+        }),*/
+        ImageNode.configure({
+          width: 350,
+          uploadUrl: 'http://devv2.xiaoneng.com/heppm/file/uploadFileAndSaveDb',
+          uploadHeaders: {
+            authorization: '5t2g5ve2tlcb8fzf2v76d1sunsxipvam',
+          },
+          // upload: handleImageUpload,
           onError: (error) => console.error('Upload failed:', error),
         }),
       ],
@@ -158,6 +166,7 @@ export default {
     padding: 24px 60px 60px 60px;
     overflow-y: auto;
     .custom-editor-content {
+      position: relative;
       margin-top: 24px;
     }
   }

@@ -107,6 +107,14 @@
     padding: 0 5px;
 
   }
+  // 当前激活元素样式
+  .ProseMirror-selectednode {
+    .tiptap-image .tiptap-image-container {
+      outline: .125rem solid rgba(0, 0, 0, 0);
+      outline-color: #6229ff;
+      border-radius: .25rem;
+    }
+  }
 }
 .sandbox-type-in-brushing {
   cursor: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAi9JREFUSA3dVb+LGlEQ3nWjwiFEC7G5+AtZtvCOIESuczmOS5HGQptAiohglT6lf8TB4YEWSSOSyi5RCIEUwsLC3RUXDVhIsgQJwXSKP16+t3DL7tu3CkcCSRaGnfneNzNvZue9FYR//RF/RwHJZFLdbDaHPp9vJEnSl/V6vQ9bhn15b1eCVCp1CE6C8vx+vz4ajb7yfERRlBH0CeQU6+9gf8b7isd1YPF4/BxCqCQSiaeORY5BeXbYZzf+hP4fJyiXy5KqqnQIrCoJISZWr9ctbFdbXWOKkXuMSTiDY2aL8xpT8gEj+Xw8Hk/sPPqRJ5OJFdexk3Q6fR/B3+wITuNJqOZ4tVpd2IPzdEcCBD8CKcQj8jBUQflbH0cC7OrBVjazGIlEfjCQy3ScZPQ0XalUFtVqNehiMkC73V41Go23DOwyHQmi0ehxPp8PxmIxF5EFNE37Pp/P37M4a1stymQywdls9jCXy7Ecro0Ee4FA4CN30QZaCZbL5Yksy2IoFBJ6vZ5JWSwWXF3XdYIJMobDoWGLxVWtBGjLi1KpFBgMBkKz2TTJXnqn0/mGBG1uRAY0E6A9UbRHLRaL5o4LhYJJo5WwOkZZ6Ha7exjRDhPL28TpfVmr1X5Op1OSzWaJYRjES+/3+0RRFN0rGntdi/ReabVaQzgkvZw4eAXXwetbnP7RcIaeQR4BO4Bco0IN8sq6M27Jd3nTBPBT0D4tHA5/QrsV/C5pspu7xPu7fH4BGZvio4O1WFsAAAAASUVORK5CYII=) 20 10,text!important;

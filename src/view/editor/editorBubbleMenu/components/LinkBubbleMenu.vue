@@ -117,6 +117,7 @@ export default {
   data() {
     return {
       copyOk: false,
+      linkConfig,
     }
   },
   methods: {
@@ -141,9 +142,6 @@ export default {
     },
   },
   computed: {
-    linkConfig() {
-      return linkConfig
-    },
     linkData() {
       return this.editor.getAttributes('link')
     },

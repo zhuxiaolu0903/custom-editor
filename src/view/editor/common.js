@@ -67,8 +67,6 @@ export const toolbarPathNameMap = {
     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="-2 -2 28 28"><path d="M3 4H21V6H3V4ZM3 19H21V21H3V19ZM11 14H21V16H11V14ZM11 9H21V11H11V9ZM7 12.5L3 16V9L7 12.5Z"></path></svg>',
   hardBreak:
     '<svg t="1754025137706" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10790" width="24" height="24"><path d="M621.696 704h54.848a91.392 91.392 0 1 0 0-182.848H219.52a36.544 36.544 0 0 1 0-73.152h457.152a164.608 164.608 0 0 1 0 329.152h-54.912v36.544a18.304 18.304 0 0 1-29.248 14.656l-78.016-58.496a36.672 36.672 0 0 1 0-58.56l78.08-58.496a18.304 18.304 0 0 1 29.184 14.656V704zM219.52 192h585.152a36.544 36.544 0 0 1 0 73.152H219.392a36.544 36.544 0 1 1 0-73.152z m182.848 548.544a36.608 36.608 0 0 1-36.608 36.608H219.52a36.608 36.608 0 0 1 0-73.152h146.24a36.544 36.544 0 0 1 36.608 36.544z" p-id="10791"></path></svg>',
-  image:
-    '<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" className="mp-icon-container"><g fill="#39404D" transform="translate(5 6)" fill-rule="evenodd"><path d="M14 0a1 1 0 011 1v11a1 1 0 01-1 1H1a1 1 0 01-1-1V1a1 1 0 011-1h13zm-.5 1.6h-12v10h12v-10z"></path><circle cx="5.25" cy="4.25" r="1.25"></circle><path d="M11 5l2.999 3L14 12l.249-.001L14 13H6v-.001L1 13l-.334-1.001L1 12 .999 9.25 4 7l2.501 2.5L11 5z"></path></g></svg>',
 }
 
 // 获取激活的链接文本或者选中的文本和激活的链接
