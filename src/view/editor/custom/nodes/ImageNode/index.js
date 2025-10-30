@@ -18,7 +18,7 @@ export const ImageNode = Node.create({
       file: null, // 上传的表单名
       uploadUrl: '', // 上传url
       uploadHeaders: undefined, // 上传方法请求头，外部传入
-      width: 350,
+      width: 200,
       height: 'auto',
       align: 'left',
       minWidth: 30,

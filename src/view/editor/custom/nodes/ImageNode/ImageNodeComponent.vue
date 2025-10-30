@@ -52,7 +52,6 @@
 
 <script>
 import { nodeViewProps, NodeViewWrapper } from '@tiptap/vue-2'
-// import { getUploader } from '@/utils/fileUploader'
 
 export default {
   name: 'ImageNode',
@@ -84,11 +83,10 @@ export default {
       return `${parseFloat((bytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`
     },
     uploadImage() {
-      // const url = this.attrs.uploadUrl
-      // const uploader = getUploader(url)
-      // const headers = this.attrs.uploadHeaders ? this.attrs.uploadHeaders : {}
-      this.fileItem.status = 'uploading'
-      /*uploader(this.fileItem.file, url, headers, 'img')
+      /*const url = this.attrs.uploadUrl
+      const uploader = getUploader(url)
+      const headers = this.attrs.uploadHeaders ? this.attrs.uploadHeaders : {}
+      uploader(this.fileItem.file, url, headers, 'img')
         .then((json) => {
           if (json.errorCode === 0 && json.data && json.data.src) {
             this.isLoading = false
@@ -100,6 +98,7 @@ export default {
         .then(() => {
           // 移除节点
         })*/
+      this.fileItem.status = 'uploading'
       setTimeout(() => {
         this.isLoading = false
         this.fileItem.url =

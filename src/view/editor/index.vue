@@ -123,8 +123,8 @@ export default {
           onError: (error) => console.error('Upload failed:', error),
         }),*/
         ImageNode.configure({
-          width: 350,
-          uploadUrl: 'http://devv2.xiaoneng.com/heppm/file/uploadFileAndSaveDb',
+          width: 200,
+          uploadUrl: '/api/1/upload',
           uploadHeaders: {
             authorization: '5t2g5ve2tlcb8fzf2v76d1sunsxipvam',
           },

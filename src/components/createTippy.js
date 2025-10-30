@@ -9,7 +9,7 @@ export const createTippy = (element, tippyOptions = {}) => {
     trigger: 'manual',
     placement: 'top',
     hideOnClick: 'toggle',
-    appendTo: document.body,
+    // appendTo: document.body,
     ...tippyOptions,
   })
 }

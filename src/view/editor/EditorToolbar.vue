@@ -1,80 +1,12 @@
 <template>
   <div class="editor-toolbar-wrapper">
     <div class="editor-toolbar-container">
-      <div class="editor-toolbar-item" v-for="(menu, index) in toolbarMenus" :key="index">
-        <div v-if="menu.name === '|'">
-          <Divider />
-        </div>
-        <div v-else class="editor-toolbar-item-content">
-          <HeadingButton
-            v-if="menu.name === 'heading'"
-            :options="menu.options"
-            :is-active="(value) => menu.isActive({ editor, value })"
-            :is-disabled="disabled || menu.isDisabled({ editor })"
-            @click="(value) => menu.onClick({ editor, ...value })"
-          />
-          <FontFamilyButton
-            v-else-if="menu.name === 'fontFamily'"
-            :options="menu.options"
-            :is-active="(value) => menu.isActive({ editor, value })"
-            :is-disabled="disabled || menu.isDisabled({ editor })"
-            @click="(value) => menu.onClick({ editor, ...value })"
-          />
-          <FontSizeButton
-            v-else-if="menu.name === 'fontSize'"
-            :options="menu.options"
-            :is-active="(value) => menu.isActive({ editor, value })"
-            :is-disabled="disabled || menu.isDisabled({ editor })"
-            @click="(value) => menu.onClick({ editor, ...value })"
-          />
-          <LinkButton
-            v-else-if="menu.name === 'link'"
-            :tips="menu.tips"
-            :editor="editor"
-            :is-active="menu.isActive({ editor })"
-            :is-disabled="disabled || menu.isDisabled({ editor })"
-            @click="(value) => menu.onClick({ editor, ...value })"
-          />
-          <FontStyleButton
-            v-else-if="menu.name === 'fontStyle'"
-            :editor="editor"
-            :is-active="(value) => menu.isActive({ editor, ...value })"
-            :is-disabled="disabled || menu.isDisabled({ editor })"
-            @click="(value) => menu.onClick({ editor, ...value })"
-          />
-          <TextAlignButton
-            v-else-if="menu.name === 'textAlign'"
-            :options="menu.options"
-            :is-active="(value) => menu.isActive({ editor, value })"
-            :is-disabled="disabled || menu.isDisabled({ editor })"
-            @click="(value) => menu.onClick({ editor, ...value })"
-          />
-          <LineHeightButton
-            v-else-if="menu.name === 'lineHeight'"
-            :options="menu.options"
-            :is-active="(value) => menu.isActive({ editor, value })"
-            :is-disabled="disabled || menu.isDisabled({ editor })"
-            @click="(value) => menu.onClick({ editor, ...value })"
-          />
-          <ImageButton
-            v-else-if="menu.name === 'image'"
-            :editor="editor"
-            :tips="menu.tips"
-            @change="(value) => menu.onChange({ editor, ...value })"
-            :is-disabled="disabled || menu.isDisabled({ editor })"
-          />
-          <IconButton
-            v-else
-            :tips="menu.tips"
-            @click="menu.onClick({ editor })"
-            @dblclick="menu.onDoubleClick && menu.onDoubleClick({ editor })"
-            :is-active="menu.isActive({ editor })"
-            :is-disabled="disabled || menu.isDisabled({ editor })"
-          >
-            <span style="display: flex" v-html="pathName(menu.name)"></span>
-          </IconButton>
-        </div>
-      </div>
+      <DynamicOverflowContainer
+        :items="componentItems"
+        width-strategy="auto"
+        :trigger-width="32"
+        :item-gap="8"
+      ></DynamicOverflowContainer>
     </div>
   </div>
 </template>
@@ -117,22 +49,14 @@ import {
   outdentConfig,
   imageConfig,
 } from './extensionConfig'
-import { Divider, IconButton } from '@/components'
 import ImageButton from '@/view/editor/components/ImageButton.vue'
+import DynamicOverflowContainer from '@/view/editor/components/base/DynamicOverflowContainer.vue'
+import { Divider, IconButton } from '@/components'
 
 export default {
   name: 'EditorToolbar',
   components: {
-    ImageButton,
-    Divider,
-    LinkButton,
-    FontStyleButton,
-    FontSizeButton,
-    FontFamilyButton,
-    HeadingButton,
-    IconButton,
-    TextAlignButton,
-    LineHeightButton,
+    DynamicOverflowContainer,
   },
   props: {
     // 工具栏是否禁用
@@ -179,9 +103,156 @@ export default {
         outdent: outdentConfig,
         image: imageConfig,
       },
+      componentItems: [],
     }
   },
+  mounted() {
+    this.setComponentItems()
+  },
   methods: {
+    setComponentItems() {
+      let result = []
+      this.toolbarMenus.forEach((menu, index) => {
+        if (menu.name === '|') {
+          result.push({
+            id: menu.name + index,
+            component: Divider,
+          })
+        } else if (menu.name === 'heading') {
+          result.push({
+            id: menu.name,
+            component: HeadingButton,
+            props: {
+              options: menu.options,
+              isActive: (value) => menu.isActive({ editor: this.editor, value }),
+              isDisabled: this.disabled || menu.isDisabled({ editor: this.editor }),
+            },
+            events: {
+              click: (value) => menu.onClick({ editor: this.editor, ...value }),
+            },
+          })
+        } else if (menu.name === 'fontFamily') {
+          result.push({
+            id: menu.name,
+            component: FontFamilyButton,
+            props: {
+              options: menu.options,
+              isActive: (value) => menu.isActive({ editor: this.editor, value }),
+              isDisabled: this.disabled || menu.isDisabled({ editor: this.editor }),
+            },
+            events: {
+              click: (value) => menu.onClick({ editor: this.editor, ...value }),
+            },
+          })
+        } else if (menu.name === 'fontSize') {
+          result.push({
+            id: menu.name,
+            component: FontSizeButton,
+            props: {
+              options: menu.options,
+              isActive: (value) => menu.isActive({ editor: this.editor, value }),
+              isDisabled: this.disabled || menu.isDisabled({ editor: this.editor }),
+            },
+            events: {
+              click: (value) => menu.onClick({ editor: this.editor, ...value }),
+            },
+          })
+        } else if (menu.name === 'link') {
+          result.push({
+            id: menu.name,
+            component: LinkButton,
+            props: {
+              tips: menu.tips,
+              editor: this.editor,
+              isActive: menu.isActive({ editor: this.editor }),
+              isDisabled: this.disabled || menu.isDisabled({ editor: this.editor }),
+            },
+            events: {
+              click: (value) => menu.onClick({ editor: this.editor, ...value }),
+            },
+          })
+        } else if (menu.name === 'fontStyle') {
+          result.push({
+            id: menu.name,
+            component: FontStyleButton,
+            props: {
+              editor: this.editor,
+              isActive: (value) => menu.isActive({ editor: this.editor, value }),
+              isDisabled: this.disabled || menu.isDisabled({ editor: this.editor }),
+            },
+            events: {
+              click: (value) => menu.onClick({ editor: this.editor, ...value }),
+            },
+          })
+        } else if (menu.name === 'textAlign') {
+          result.push({
+            id: menu.name,
+            component: TextAlignButton,
+            props: {
+              options: menu.options,
+              isActive: (value) => menu.isActive({ editor: this.editor, value }),
+              isDisabled: this.disabled || menu.isDisabled({ editor: this.editor }),
+            },
+            events: {
+              click: (value) => menu.onClick({ editor: this.editor, ...value }),
+            },
+          })
+        } else if (menu.name === 'lineHeight') {
+          result.push({
+            id: menu.name,
+            component: LineHeightButton,
+            props: {
+              options: menu.options,
+              isActive: (value) => menu.isActive({ editor: this.editor, value }),
+              isDisabled: this.disabled || menu.isDisabled({ editor: this.editor }),
+            },
+            events: {
+              click: (value) => menu.onClick({ editor: this.editor, ...value }),
+            },
+          })
+        } else if (menu.name === 'image') {
+          result.push({
+            id: menu.name,
+            component: ImageButton,
+            props: {
+              tips: menu.tips,
+              editor: this.editor,
+              isDisabled: this.disabled || menu.isDisabled({ editor: this.editor }),
+            },
+            events: {
+              change: (value) => menu.onChange({ editor: this.editor, ...value }),
+            },
+          })
+        } else {
+          result.push({
+            id: menu.name,
+            component: IconButton,
+            props: {
+              tips: menu.tips,
+              isDisabled: this.disabled || menu.isDisabled({ editor: this.editor }),
+            },
+            events: {
+              change: (value) => menu.onChange({ editor: this.editor, ...value }),
+              click: () => menu.onClick({ editor: this.editor }),
+              dblclick: () => menu.onDoubleClick && menu.onDoubleClick({ editor: this.editor }),
+            },
+            slots: {
+              default: () => [
+                this.$createElement('span', {
+                  style: {
+                    display: 'flex',
+                  },
+                  domProps: {
+                    innerHTML: this.pathName(menu.name),
+                  },
+                }),
+              ],
+            },
+          })
+        }
+      })
+      this.componentItems = result
+    },
     pathName(name) {
       return toolbarPathNameMap[name]
     },

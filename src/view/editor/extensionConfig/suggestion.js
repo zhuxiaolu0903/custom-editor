@@ -1,6 +1,6 @@
 import { posToDOMRect, VueRenderer } from '@tiptap/vue-2'
 import { computePosition, flip, shift } from '@floating-ui/dom'
-import MentionList from '@/view/editor/components/MentionList.vue'
+import { MentionList } from '@/view/editor/components'
 
 // 设置弹层位置
 const updatePosition = (editor, element) => {

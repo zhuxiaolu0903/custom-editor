@@ -8,13 +8,14 @@ const base64Uploader = (file, uploadUrl, headers, formName) => {
   })
 }
 
-const fileUploader = (file, uploadUrl, headers, formName) => {
+const fileUploader = (file, uploadUrl, headers) => {
   const formData = new FormData()
-  formData.append(formName, file)
+  formData.append('image', file)
+  formData.append('key', '31a649d5109d0cb87fb368e151502094')
   return new Promise((resolve, reject) => {
     fetch(uploadUrl, {
       method: 'post',
-      headers: { Accept: 'application/json', ...headers },
+      headers: { ...headers },
       body: formData,
     })
       .then((resp) => resp.json())
